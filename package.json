@@ -1,0 +1,23 @@
+{
+  "name": "natours",
+  "version": "1.0.0",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Anirban",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.17.1"
+  },
+  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/anirban-s/natours.git"
+  },
+  "bugs": {
+    "url": "https://github.com/anirban-s/natours/issues"
+  },
+  "homepage": "https://github.com/anirban-s/natours#readme",
+  "description": ""
+}
