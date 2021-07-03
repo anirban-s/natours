@@ -4,7 +4,8 @@
   "main": "app.js",
   "scripts": {
     "start": "nodemon server.js",
-    "start:prod": "nodemon server.js"
+    "start:prod": "nodemon server.js",
+    "debug": "ndb server.js"
   },
   "author": "Anirban",
   "license": "ISC",
@@ -25,6 +26,7 @@
     "eslint-plugin-node": "^8.0.1",
     "eslint-plugin-prettier": "^3.0.1",
     "eslint-plugin-react": "^7.12.4",
+    "ndb": "^1.1.5",
     "nodemon": "^2.0.7",
     "prettier": "^1.17.0"
   },
