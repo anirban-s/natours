@@ -31,11 +31,11 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: [true, 'Please confirm your password'],
     validate: {
-      // This only wors on CREATE and SAVE!!!
+      // This only works on CREATE and SAVE!!!
       validator: function(el) {
         return el === this.password;
       },
-      message: 'Passwords are not the same'
+      message: 'Passwords are not the same!'
     }
   },
   passwordChangedAt: Date,
@@ -48,6 +48,18 @@ const userSchema = new mongoose.Schema({
   }
 });
 
+userSchema.pre('save', async function(next) {
+  // Only run this function if password was actually modified
+  if (!this.isModified('password')) return next();
+
+  // Hash the password with cost of 12
+  this.password = await bcrypt.hash(this.password, 12);
+
+  // Delete passwordConfirm field
+  this.passwordConfirm = undefined;
+  next();
+});
+
 userSchema.pre('save', function(next) {
   if (!this.isModified('password') || this.isNew) return next();
 
@@ -55,17 +67,8 @@ userSchema.pre('save', function(next) {
   next();
 });
 
-userSchema.pre('save', async function(next) {
-  if (!this.isModified('password')) return next();
-
-  this.password = await bcrypt.hash(this.password, 12);
-
-  this.passwordConfirm = undefined;
-  next();
-});
-
 userSchema.pre(/^find/, function(next) {
-  // this points to current query
+  // this points to the current query
   this.find({ active: { $ne: false } });
   next();
 });
@@ -77,17 +80,17 @@ userSchema.methods.correctPassword = async function(
   return await bcrypt.compare(candidatePassword, userPassword);
 };
 
-userSchema.methods.changedPasswordAfter = function(JWTTimeStamp) {
+userSchema.methods.changedPasswordAfter = function(JWTTimestamp) {
   if (this.passwordChangedAt) {
-    const changedTimeStamp = parseInt(
+    const changedTimestamp = parseInt(
       this.passwordChangedAt.getTime() / 1000,
       10
     );
 
-    return JWTTimeStamp < changedTimeStamp;
+    return JWTTimestamp < changedTimestamp;
   }
 
-  // FALSE means NOT changed
+  // False means NOT changed
   return false;
 };
 

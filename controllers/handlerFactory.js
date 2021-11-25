@@ -47,10 +47,10 @@ exports.createOne = Model =>
     });
   });
 
-exports.getOne = (Model, populateOptions) =>
+exports.getOne = (Model, popOptions) =>
   catchAsync(async (req, res, next) => {
     let query = Model.findById(req.params.id);
-    if (populateOptions) query = query.populate(query);
+    if (popOptions) query = query.populate(popOptions);
     const doc = await query;
 
     if (!doc) {
@@ -67,7 +67,7 @@ exports.getOne = (Model, populateOptions) =>
 
 exports.getAll = Model =>
   catchAsync(async (req, res, next) => {
-    //   To allow for nested GET reviews on tour
+    // To allow for nested GET reviews on tour (hack)
     let filter = {};
     if (req.params.tourId) filter = { tour: req.params.tourId };
 
