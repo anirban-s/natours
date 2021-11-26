@@ -17,7 +17,7 @@ exports.getTour = catchAsync(async (req, res, next) => {
     fields: 'reviw rating user'
   });
   res.status(200).render('tour', {
-    title: 'The Forest Hoker Tour',
+    title: `${tour.name} Tour`,
     tour
   });
 });
