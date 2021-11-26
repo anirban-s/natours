@@ -30,7 +30,7 @@ block content
                 .heading-box__detail
                     svg.heading-box__icon
                         use(xlink:href='/img/icons.svg#icon-map-pin')
-                    span.heading-box__text= tour,startLocation.description
+                    span.heading-box__text= tour.startLocation.description
 
         section.section-description
             .overview-box
@@ -48,9 +48,9 @@ block content
                         each guide in tour.guides
                             .overview-box__detail
                                 img.overview-box__img(src=`/img/users/${guide.photo}`, alt=`${guide.name}`)
-                                - if(guilde.role === 'lead-guide')
+                                - if(guide.role === 'lead-guide')
                                     span.overview-box__label Lead Guide
-                                - if(guilde.role === 'guide')
+                                - if(guide.role === 'guide')
                                     span.overview-box__label Tour Guide
                                 span.overview-box__text= guide.name
 
@@ -72,7 +72,7 @@ block content
         section.section-reviews
             .reviews
                 each review in tour.reviews
-                +reviewCard(review)
+                    +reviewCard(review)
 
 
         section.section-cta
