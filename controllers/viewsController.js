@@ -11,8 +11,13 @@ exports.getOverView = catchAsync(async (req, res, next) => {
   });
 });
 
-exports.getTour = (req, res, next) => {
-  res.status(200).render('tour', {
-    title: 'The Forest Hoker Tour'
+exports.getTour = catchAsync(async (req, res, next) => {
+  const tour = await Tour.findOne({ slug: req.params.slug }).populate({
+    path: 'reviews',
+    fields: 'reviw rating user'
   });
-};
+  res.status(200).render('tour', {
+    title: 'The Forest Hoker Tour',
+    tour
+  });
+});
